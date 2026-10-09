@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="Aryan Patil — Backend, frontend and full-stack developer (Java/Spring Boot + React/MERN). Secure apps, real auth, AI integrations." />
+  <title>Aryan Patil | Java Spring Boot Backend &amp; Frontend Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+          },
+          colors: {
+            surface: {
+              950: '#0a0a0b',
+              900: '#111113',
+              800: '#18181b',
+              700: '#27272a',
+            },
+            accent: {
+              DEFAULT: '#22d3ee',
+              dim: '#0891b2',
+              muted: 'rgba(34, 211, 238, 0.12)',
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+    body { background: #0a0a0b; }
+    :root {
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #22d3ee 0%, #a78bfa 50%, #f472b6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200% 200%;
+      animation: shift 10s ease infinite;
+    }
+    @keyframes shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .card {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(24,24,27,0.9) 0%, rgba(17,17,19,0.95) 100%);
+      border: 1px solid rgba(39,39,42,0.8);
+      transition:
+        border-color 0.35s var(--ease-soft),
+        transform 0.45s var(--ease-out),
+        box-shadow 0.45s var(--ease-soft);
+    }
+    .card:hover {
+      border-color: rgba(34, 211, 238, 0.28);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px -16px rgba(34, 211, 238, 0.12);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s var(--ease-soft);
+      background: radial-gradient(
+        420px circle at var(--mx, 50%) var(--my, 0%),
+        rgba(34, 211, 238, 0.09),
+        transparent 60%
+      );
+    }
+    .card:hover::before { opacity: 1; }
+    .nav-link { position: relative; transition: color 0.25s var(--ease-soft); }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 0;
+      height: 2px;
+      background: #22d3ee;
+      transition: width 0.3s var(--ease-out);
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after { width: 100%; }
+    .skill-pill {
+      background: rgba(34, 211, 238, 0.08);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      transition: border-color 0.25s, background 0.25s, transform 0.25s var(--ease-out);
+    }
+    .skill-pill:hover {
+      border-color: rgba(34, 211, 238, 0.4);
+      background: rgba(34, 211, 238, 0.12);
+      transform: translateY(-1px);
+    }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #22d3ee;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.22;
+      pointer-events: none;
+      animation: floatBlob 14s ease-in-out infinite;
+    }
+    .blob:nth-of-type(2) { animation-delay: -7s; }
+    @keyframes floatBlob {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(12px, -18px) scale(1.04); }
+    }
+    ::selection {
+      background: rgba(34, 211, 238, 0.3);
+      color: #fff;
+    }
+    .stat-chip {
+      background: rgba(34, 211, 238, 0.06);
+      border: 1px solid rgba(34, 211, 238, 0.18);
+    }
+    .timeline-line {
+      position: absolute;
+      left: 11px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, #22d3ee, transparent);
+      transform-origin: top;
+    }
+    header {
+      padding-top: env(safe-area-inset-top, 0px);
+      transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+    }
+    header.is-scrolled {
+      border-color: rgba(39, 39, 42, 0.95);
+      background: rgba(10, 10, 11, 0.88);
+      box-shadow: 0 8px 32px -12px rgba(0, 0, 0, 0.55);
+    }
+    #bg {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.85;
+    }
+    main, footer { position: relative; z-index: 1; }
+    #progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      z-index: 60;
+      transform: scaleX(0);
+      transform-origin: left;
+      background: linear-gradient(90deg, #22d3ee, #a78bfa, #f472b6);
+    }
+    .tilt { will-change: transform; }
+    .word {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: bottom;
+      padding-bottom: 0.12em;
+    }
+    .word > span { display: inline-block; }
+    .fchip {
+      transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.25s var(--ease-out);
+    }
+    .fchip:hover { transform: translateY(-1px); }
+    .fchip.active {
+      background: #22d3ee;
+      color: #0a0a0b;
+      border-color: #22d3ee;
+    }
+    #cursor {
+      position: fixed;
+      left: -150px;
+      top: -150px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+      background: radial-gradient(circle, rgba(34, 211, 238, 0.08), transparent 65%);
+    }
+    a, button {
+      transition: color 0.2s, background 0.2s, border-color 0.2s, opacity 0.2s, transform 0.3s var(--ease-out);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .gradient-text, .blob { animation: none !important; }
+      .card, .skill-pill, .fchip, a, button { transition: none !important; }
+      .card:hover { transform: none; }
+    }
+    @media print {
+      header, #bg, #cursor, #progress, footer, .noprint, main > section:not(#resume) { display: none !important; }
+      body { background: #fff !important; }
+      #resume, #resume .card { background: #fff !important; border: 0 !important; }
+      #resume * { color: #000 !important; }
+    }
+  </style>
+</head>
+<body class="font-sans text-zinc-300 antialiased">
+  <div id="progress"></div>
+  <canvas id="bg" aria-hidden="true"></canvas>
+  <div id="cursor"></div>
+  <!-- Nav -->
+  <header class="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800/80 bg-surface-950/80 backdrop-blur-md">
+    <nav class="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
+      <a href="#home" class="font-mono text-sm font-medium text-white tracking-tight">
+        <span class="text-accent">~/</span>aryan
+      </a>
+      <ul class="hidden sm:flex items-center gap-4 md:gap-7 text-xs md:text-sm text-zinc-400"><li><a href="#projects" class="nav-link hover:text-white transition">Projects</a></li><li><a href="#about" class="nav-link hover:text-white transition">About</a></li><li><a href="#skills" class="nav-link hover:text-white transition">Skills</a></li><li><a href="#experience" class="nav-link hover:text-white transition">Experience</a></li><li><a href="#resume" class="nav-link hover:text-white transition">Resume</a></li><li><a href="#contact" class="nav-link hover:text-white transition">Contact</a></li></ul>
+      <a href="https://github.com/aryanpm28" target="_blank" rel="noopener noreferrer"
+         class="hidden md:inline-flex items-center gap-2 rounded-lg border border-zinc-700 bg-surface-800 px-3 py-1.5 text-xs font-medium text-zinc-300 hover:border-accent/50 hover:text-white transition">
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.76-1.605-2.665-.303-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.236-3.22-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.22 0 4.61-2.805 5.625-5.475 5.92.43.37.823 1.102.823 2.222 0 1.606-.015 2.896-.015 3.286 0 .32.216.697.825.577C20.565 21.796 24 17.297 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <!-- Mobile menu button -->
+      <button id="menu-btn" class="sm:hidden p-2 text-zinc-400 hover:text-white" aria-label="Menu">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden sm:hidden border-t border-zinc-800 bg-surface-950 px-5 py-4">
+      <ul class="flex flex-col gap-3 text-sm text-zinc-400"><li><a href="#projects" class="block py-1 hover:text-white">Projects</a></li><li><a href="#about" class="block py-1 hover:text-white">About</a></li><li><a href="#skills" class="block py-1 hover:text-white">Skills</a></li><li><a href="#experience" class="block py-1 hover:text-white">Experience</a></li><li><a href="#resume" class="block py-1 hover:text-white">Resume</a></li><li><a href="#contact" class="block py-1 hover:text-white">Contact</a></li><li><a href="https://github.com/aryanpm28" target="_blank" rel="noopener noreferrer" class="block py-1 text-accent">GitHub →</a></li></ul>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section id="home" class="relative min-h-[90vh] flex items-center overflow-hidden pt-20">
+      <div class="blob top-20 -left-20 h-72 w-72 bg-cyan-500/30"></div>
+      <div class="blob bottom-10 right-0 h-96 w-96 bg-violet-600/20"></div>
+      <div class="relative mx-auto max-w-5xl px-5 py-16 md:py-24">
+        <p class="section-label mb-4">Aryan Patil · B.Sc. IT (2027) · Open to internships</p>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.1]"><span class="word"><span class="">Java</span></span> <span class="word"><span class="gradient-text">Spring</span></span> <span class="word"><span class="gradient-text">Boot</span></span> <span class="word"><span class="">Backend</span></span> <span class="word"><span class="">&amp;</span></span> <span class="word"><span class="">Frontend</span></span> <span class="word"><span class="">Developer</span></span> </h1>
+        <p class="mt-6 max-w-2xl text-lg text-zinc-400 leading-relaxed">I build <span class="text-zinc-200">secure, production-ready APIs</span>, responsive frontends and full-stack applications — Java &amp; Spring Boot first, with <span class="text-zinc-200">React and the MERN stack</span> as my secondary stack.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#projects"
+             class="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-surface-950 hover:bg-cyan-300 transition">
+            View Projects
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </a>
+          <a href="#resume" class="inline-flex items-center gap-2 rounded-lg border border-zinc-700 bg-surface-800/50 px-5 py-2.5 text-sm font-medium text-zinc-200 hover:border-accent/50 hover:text-white transition">View Resume</a>
+        </div>
+        <div class="mt-12 flex flex-wrap gap-6 text-sm text-zinc-500">
+          <span class="flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Open to opportunities
+          </span>
+          <span>Maharashtra, India</span>
+          <span>B.Sc. IT · Grad 2027</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="border-t border-zinc-800/60 py-20 md:py-28"><div class="mx-auto max-w-5xl px-5"><p class="section-label mb-3">Featured Projects</p><h2 class="text-2xl sm:text-3xl font-bold text-white mb-3">Selected work</h2><p class="text-zinc-400 mb-6 max-w-xl">Secure, deployed apps you can actually try — each one has a live demo and its source on GitHub.</p><div class="mb-8 flex flex-wrap gap-2"><button data-filter="all" class="fchip rounded-full border border-zinc-700 px-3.5 py-1.5 text-xs font-medium text-zinc-300 hover:border-accent/50 transition">All</button><button data-filter="java" class="fchip rounded-full border border-zinc-700 px-3.5 py-1.5 text-xs font-medium text-zinc-300 hover:border-accent/50 transition">Java/Spring Boot</button><button data-filter="mern" class="fchip rounded-full border border-zinc-700 px-3.5 py-1.5 text-xs font-medium text-zinc-300 hover:border-accent/50 transition">MERN</button><button data-filter="ai" class="fchip rounded-full border border-zinc-700 px-3.5 py-1.5 text-xs font-medium text-zinc-300 hover:border-accent/50 transition">AI</button></div><div id="featured"></div><div id="more" class="grid gap-5"></div></div></section>
+
+    <!-- About -->
+    <section id="about" class="border-t border-zinc-800/60 py-20 md:py-28">
+      <div class="mx-auto max-w-5xl px-5">
+        <p class="section-label mb-3">About</p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-8">Who I am</h2>
+        <div class="grid md:grid-cols-5 gap-10">
+          <div class="md:col-span-3 space-y-4 text-zinc-400 leading-relaxed">
+            <p>
+              I'm a third-year <strong class="text-zinc-200">B.Sc. Information Technology</strong> student
+              and a backend, frontend and full-stack developer working across two stacks —
+              <strong class="text-zinc-200">Java / Spring Boot</strong> and the
+              <strong class="text-zinc-200">MERN stack</strong>.
+            </p>
+            <p>
+              I care about building things the way they'd ship: custom security filters, JWT auth,
+              rate limiting, content verification, quotas, and graceful fallbacks — not just happy-path demos.
+              When I integrate AI, I treat it as a real dependency (with timeouts, fallbacks, and source attribution).
+            </p>
+            <p>
+              Currently learning Docker, microservices, AWS, and system design to level up architecture skills.
+            </p>
+          </div>
+          <div class="md:col-span-2">
+            <div class="card rounded-xl p-5 space-y-4">
+              <div>
+                <p class="text-xs font-mono text-zinc-500 uppercase tracking-wider">Education</p>
+                <p class="mt-1 text-white font-medium">B.Sc. Information Technology</p>
+                <p class="text-sm text-zinc-400">Third year · Expected 2027</p>
+                <p class="text-sm text-zinc-500 mt-0.5">Shri Purshottamdas Laldas Shroff College</p>
+              </div>
+              <div class="border-t border-zinc-800 pt-4">
+                <p class="text-xs font-mono text-zinc-500 uppercase tracking-wider">Focus</p>
+                <p class="mt-1 text-sm text-zinc-300">Secure backends · Responsive frontends · Full-stack features · AI integrations</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="border-t border-zinc-800/60 py-20 md:py-28 bg-surface-900/40">
+      <div class="mx-auto max-w-5xl px-5">
+        <p class="section-label mb-3">Skills</p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3">Tech stack</h2>
+        <p class="mb-8 max-w-2xl text-sm text-zinc-500">Core: Java · Spring Boot · Spring Security · REST APIs · MySQL · React · Git. Workflow: I use AI assistants (Claude, ChatGPT, Gemini, Codex) for code review and debugging.</p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="card rounded-xl p-5">
+            <h3 class="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+              <span class="text-accent">◇</span> Frontend
+            </h3>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">HTML5</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">CSS3</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">JavaScript</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">React</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Tailwind CSS</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Vite</span>
+            </div>
+            <p class="text-xs text-zinc-500 leading-relaxed">
+              Responsive UIs and component-driven interfaces for full-stack apps.
+            </p>
+          </div>
+          <div class="card rounded-xl p-5">
+            <h3 class="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+              <span class="text-accent">◇</span> Backend
+            </h3>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Java</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Spring Boot</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Node.js</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Express.js</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">REST APIs</span>
+            </div>
+            <p class="text-xs text-zinc-500 leading-relaxed">
+              REST services and business logic across Java/Spring Boot and MERN stacks.
+            </p>
+          </div>
+          <div class="card rounded-xl p-5">
+            <h3 class="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+              <span class="text-accent">◇</span> Database
+            </h3>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">MySQL</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">MongoDB</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Hibernate</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Spring Data JPA</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Aiven MySQL</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">MongoDB Atlas</span>
+            </div>
+            <p class="text-xs text-zinc-500 leading-relaxed">
+              Relational and document stores — cloud-hosted on Aiven (MySQL) and MongoDB Atlas — with ORM mapping and per-user data isolation.
+            </p>
+          </div>
+          <div class="card rounded-xl p-5">
+            <h3 class="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+              <span class="text-accent">◇</span> Security
+            </h3>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Spring Security</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">JWT</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">bcrypt</span>
+            </div>
+            <p class="text-xs text-zinc-500 leading-relaxed">
+              Custom filters, token auth, password hashing, and protected endpoints.
+            </p>
+          </div>
+          <div class="card rounded-xl p-5">
+            <h3 class="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+              <span class="text-accent">◇</span> Tools
+            </h3>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Git & GitHub</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Maven</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Postman</span>
+            </div>
+            <p class="text-xs text-zinc-500 leading-relaxed">
+              Version control, Java builds, and API testing during development.
+            </p>
+          </div>
+          <div class="card rounded-xl p-5">
+            <h3 class="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+              <span class="text-accent">◇</span> Deployment
+            </h3>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Render</span><span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Vercel</span>
+            </div>
+            <p class="text-xs text-zinc-500 leading-relaxed">
+              Spring Boot and Node backends deployed on Render; React frontends deployed on Vercel.
+            </p>
+          </div>
+          <div class="card rounded-xl p-5">
+            <h3 class="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+              <span class="text-accent">◇</span> Notifications
+            </h3>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Brevo</span><span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Telegram Bot API</span><span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Telegram BotFather</span>
+            </div>
+            <p class="text-xs text-zinc-500 leading-relaxed">
+              Brevo for email notifications, the Telegram Bot API for Telegram alerts, and BotFather to create and configure the bot.
+            </p>
+          </div>
+          <div class="card rounded-xl p-5 lg:col-span-2">
+            <h3 class="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+              <span class="text-accent">◇</span> Currently learning
+            </h3>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Docker</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">Microservices</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">AWS</span>
+              <span class="skill-pill rounded-md px-2.5 py-1 text-xs text-cyan-200/90">System Design</span>
+            </div>
+            <p class="text-xs text-zinc-500 leading-relaxed">
+              Leveling up architecture, containers, and cloud deployment skills.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Journey + GitHub snapshot -->
+    <section id="journey" class="border-t border-zinc-800/60 py-20 md:py-28 bg-surface-900/40">
+      <div class="mx-auto max-w-5xl px-5">
+        <p class="section-label mb-3">Journey</p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-10">Path so far</h2>
+        <div class="grid md:grid-cols-2 gap-10">
+          <div class="relative pl-8">
+            <div class="timeline-line"></div>
+            <div class="space-y-8">
+              <div class="relative">
+                <span class="absolute -left-8 top-1 h-3 w-3 rounded-full bg-accent ring-4 ring-surface-900"></span>
+                <p class="text-xs font-mono text-accent">2023</p>
+                <p class="text-white font-medium mt-0.5">Started programming</p>
+                <p class="text-sm text-zinc-500">Fundamentals and first projects</p>
+              </div>
+              <div class="relative">
+                <span class="absolute -left-8 top-1 h-3 w-3 rounded-full bg-accent ring-4 ring-surface-900"></span>
+                <p class="text-xs font-mono text-accent">2024</p>
+                <p class="text-white font-medium mt-0.5">Learned MERN stack</p>
+                <p class="text-sm text-zinc-500">React, Node, Express, MongoDB</p>
+              </div>
+              <div class="relative">
+                <span class="absolute -left-8 top-1 h-3 w-3 rounded-full bg-accent ring-4 ring-surface-900"></span>
+                <p class="text-xs font-mono text-accent">2025</p>
+                <p class="text-white font-medium mt-0.5">Started Spring Boot</p>
+                <p class="text-sm text-zinc-500">Java backend, security, REST APIs</p>
+              </div>
+              <div class="relative">
+                <span class="absolute -left-8 top-1 h-3 w-3 rounded-full bg-accent ring-4 ring-surface-900"></span>
+                <p class="text-xs font-mono text-accent">2026</p>
+                <p class="text-white font-medium mt-0.5">Production-grade projects</p>
+                <p class="text-sm text-zinc-500">Secure storage, notifications, AI apps</p>
+              </div>
+            </div>
+          </div>
+          <div class="card rounded-xl p-6 h-fit">
+            <p class="text-xs font-mono text-zinc-500 uppercase tracking-wider mb-4">At a glance</p>
+            <div class="grid grid-cols-2 gap-4"><div><p class="text-2xl font-bold text-white" data-count="4">0</p><p class="text-xs text-zinc-500 mt-0.5">Projects live</p></div><div><p class="text-2xl font-bold text-white" data-count="28">0</p><p class="text-xs text-zinc-500 mt-0.5">Technologies used</p></div><div><p class="text-2xl font-bold text-white" data-count="2">0</p><p class="text-xs text-zinc-500 mt-0.5">Stacks · Java + MERN</p></div><div><p class="text-2xl font-bold text-white" data-count="12">0</p><p class="text-xs text-zinc-500 mt-0.5">Public repositories</p></div></div>
+            <a href="https://github.com/aryanpm28" target="_blank" rel="noopener noreferrer"
+               class="mt-6 inline-flex items-center gap-2 text-sm text-accent hover:underline">
+              View GitHub profile →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="border-t border-zinc-800/60 py-20 md:py-28 bg-surface-900/40">
+      <div class="mx-auto max-w-5xl px-5">
+        <p class="section-label mb-3">Experience</p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-10">Work & certifications</h2>
+
+        <div class="card rounded-xl p-6 md:p-7 mb-8">
+          <div class="flex flex-wrap items-start justify-between gap-2 mb-4"><div><h3 class="text-lg font-semibold text-white">Python Developer Intern</h3><p class="text-accent text-sm font-medium">BizTech IT Solutions</p></div><span class="text-xs font-mono text-zinc-500">Mar 2026 – Apr 2026</span></div>
+          <div class="grid gap-3 sm:grid-cols-2"><div class="rounded-lg border border-zinc-800 bg-surface-900/60 p-4"><p class="text-xs font-mono uppercase text-accent">What I built</p><p class="mt-1 text-sm text-zinc-400">A desktop Library Management System to manage book records and user interactions.</p></div><div class="rounded-lg border border-zinc-800 bg-surface-900/60 p-4"><p class="text-xs font-mono uppercase text-accent">Technologies</p><p class="mt-1 text-sm text-zinc-400">Python, Tkinter</p></div><div class="rounded-lg border border-zinc-800 bg-surface-900/60 p-4"><p class="text-xs font-mono uppercase text-accent">What I personally implemented</p><p class="mt-1 text-sm text-zinc-400">The UI components, event handling and application logic, plus testing and debugging of the finished app.</p></div><div class="rounded-lg border border-zinc-800 bg-surface-900/60 p-4"><p class="text-xs font-mono uppercase text-accent">Result</p><p class="mt-1 text-sm text-zinc-400">A working desktop application delivered within the one-month internship.</p></div></div></div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"><div class="card rounded-xl p-5"><p class="text-xs font-mono text-zinc-500 uppercase tracking-wider mb-2">Education</p><p class="text-sm text-white font-medium">B.Sc. Information Technology</p><p class="text-sm text-zinc-400">Expected 2027</p><p class="text-xs text-zinc-500 mt-1">Shri Purshottamdas Laldas Shroff College of Arts and Commerce</p></div>
+          <div class="card rounded-xl p-5">
+            <p class="text-xs font-mono text-zinc-500 uppercase tracking-wider mb-2">Certifications</p>
+            <ul class="space-y-1.5 text-sm text-zinc-300">
+              <li>Frontend Developer (React) — Verified</li>
+              <li>REST API (Intermediate) — Verified</li>
+              <li>JavaScript (Intermediate) — Verified</li>
+              <li>Node.js (Intermediate) — Verified</li>
+            </ul>
+          </div>
+          <div class="card rounded-xl p-5">
+            <p class="text-xs font-mono text-zinc-500 uppercase tracking-wider mb-2">Job simulations · Forage</p>
+            <ul class="space-y-1.5 text-sm text-zinc-300">
+              <li>Software Engineering – Full Stack (.NET/React)</li>
+              <li>Working as a Software Engineer at a Startup</li>
+              <li>Software Engineering (GitHub Collaboration & Code Verification)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="why" class="border-t border-zinc-800/60 py-20 md:py-28"><div class="mx-auto max-w-5xl px-5"><p class="section-label mb-3">Why hire me</p><h2 class="text-2xl sm:text-3xl font-bold text-white mb-10">Why work with me</h2><div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"><div class="card rounded-xl p-5"><h3 class="text-sm font-semibold text-white flex items-center gap-2"><span class="text-accent">✓</span> Backend-focused</h3><p class="mt-2 text-xs text-zinc-500 leading-relaxed">Java, Spring Boot and REST APIs are my primary stack.</p></div><div class="card rounded-xl p-5"><h3 class="text-sm font-semibold text-white flex items-center gap-2"><span class="text-accent">✓</span> Frontend-capable</h3><p class="mt-2 text-xs text-zinc-500 leading-relaxed">React, Tailwind CSS and Vite for responsive, component-driven interfaces.</p></div><div class="card rounded-xl p-5"><h3 class="text-sm font-semibold text-white flex items-center gap-2"><span class="text-accent">✓</span> Security-conscious</h3><p class="mt-2 text-xs text-zinc-500 leading-relaxed">Custom filters, JWT, quotas, access logs and file verification.</p></div><div class="card rounded-xl p-5"><h3 class="text-sm font-semibold text-white flex items-center gap-2"><span class="text-accent">✓</span> Full-stack capable</h3><p class="mt-2 text-xs text-zinc-500 leading-relaxed">Backend, frontend and database work end to end — Spring Boot or MERN as the project needs.</p></div><div class="card rounded-xl p-5"><h3 class="text-sm font-semibold text-white flex items-center gap-2"><span class="text-accent">✓</span> Real deployed projects</h3><p class="mt-2 text-xs text-zinc-500 leading-relaxed">Four projects live on the web — backends on Render, frontends on Vercel, data on Aiven MySQL and MongoDB Atlas.</p></div><div class="card rounded-xl p-5"><h3 class="text-sm font-semibold text-white flex items-center gap-2"><span class="text-accent">✓</span> Fast learner</h3><p class="mt-2 text-xs text-zinc-500 leading-relaxed">Moved from MERN to Spring Boot and now Docker, AWS and system design.</p></div><div class="card rounded-xl p-5 sm:col-span-2 lg:col-span-3"><h3 class="text-sm font-semibold text-white flex items-center gap-2"><span class="text-accent">✓</span> Open to internships</h3><p class="mt-2 text-xs text-zinc-500 leading-relaxed">Looking for a backend, frontend or full-stack internship.</p></div></div></div></section>
+
+    <section id="resume" class="border-t border-zinc-800/60 py-20 md:py-28 bg-surface-900/40"><div class="mx-auto max-w-5xl px-5">
+        <p class="section-label mb-3">Resume</p>
+        <div class="mb-8 flex flex-wrap items-end justify-between gap-3"><h2 class="text-2xl sm:text-3xl font-bold text-white">Resume</h2>
+          <div class="noprint flex gap-2"><button onclick="window.print()" class="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-surface-950 hover:bg-cyan-300 transition">Print / Save as PDF</button><a href="mailto:aryan99999999@gmail.com?subject=Resume%20request" class="inline-flex items-center gap-2 rounded-lg border border-zinc-700 bg-surface-800/50 px-5 py-2.5 text-sm font-medium text-zinc-200 hover:border-accent/50 hover:text-white transition">Request PDF</a></div></div>
+        <div class="card rounded-xl p-6 md:p-8 space-y-5 text-sm text-zinc-400">
+          <div><h3 class="text-lg font-semibold text-white">Aryan Patil</h3><p>Maharashtra, India · aryan99999999@gmail.com · +91 9028374152 · linkedin.com/in/aryanpatil2006 · github.com/aryanpm28</p></div>
+          <p>Third-year B.Sc. IT student (expected 2027) with hands-on backend, frontend and full-stack experience in Java/Spring Boot, React and the MERN stack. Builds REST APIs, JWT authentication and custom security layers, and integrates third-party and AI services.</p>
+          <div class="grid gap-5 md:grid-cols-2">
+            <div><p class="text-xs font-mono uppercase text-accent mb-1">Skills</p><p>Java, JavaScript, HTML5, CSS3 · Spring Boot, Spring Security, React, Node.js, Express.js · MySQL, MongoDB, Hibernate, JPA · Aiven (MySQL), MongoDB Atlas · Render, Vercel · Brevo, Telegram Bot API · Git, GitHub, Maven, Postman</p></div>
+            <div><p class="text-xs font-mono uppercase text-accent mb-1">Experience</p><p>Python Developer Intern, BizTech IT Solutions (Mar–Apr 2026) — built a Library Management System in Python and Tkinter.</p></div>
+            <div><p class="text-xs font-mono uppercase text-accent mb-1">Education</p><p>B.Sc. IT, Shri Purshottamdas Laldas Shroff College of Arts and Commerce — expected 2027</p></div>
+            <div><p class="text-xs font-mono uppercase text-accent mb-1">Certifications</p><p>Frontend Developer (React), REST API, JavaScript, Node.js (Intermediate) · Forage job simulations (Sept 2026)</p></div>
+          </div>
+          <div><p class="text-xs font-mono uppercase text-accent mb-1">Projects</p><p><a class="hover:text-white underline decoration-zinc-700" href="https://github.com/aryanpm28/secure-storage" target="_blank" rel="noopener noreferrer">SecureStorage</a> · <a class="hover:text-white underline decoration-zinc-700" href="https://github.com/aryanpm28/clicknotify" target="_blank" rel="noopener noreferrer">ClickNotify</a> · <a class="hover:text-white underline decoration-zinc-700" href="https://github.com/aryanpm28/ai-chatbot-search" target="_blank" rel="noopener noreferrer">AI Chatbot Search</a> · <a class="hover:text-white underline decoration-zinc-700" href="https://github.com/aryanpm28/ai-detector" target="_blank" rel="noopener noreferrer">AI Detector</a></p></div>
+        </div></div></section>
+
+    <!-- Contact -->
+    <section id="contact" class="border-t border-zinc-800/60 py-20 md:py-28">
+      <div class="mx-auto max-w-5xl px-5 text-center">
+        <p class="section-label mb-3">Contact</p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">Let's work together</h2>
+        <p class="text-zinc-400 max-w-lg mx-auto mb-10">
+          Open to internships, freelance, and collaboration. Prefer email or LinkedIn for a first conversation.
+        </p>
+        <div class="flex flex-wrap justify-center gap-3"><a href="mailto:aryan99999999@gmail.com" class="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-surface-950 hover:bg-cyan-300 transition"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>Email me</a><a href="https://www.linkedin.com/in/aryanpatil2006/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-lg border border-zinc-700 bg-surface-800/50 px-5 py-2.5 text-sm font-medium text-zinc-200 hover:border-accent/50 hover:text-white transition"><svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>LinkedIn</a><a href="https://github.com/aryanpm28" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-lg border border-zinc-700 bg-surface-800/50 px-5 py-2.5 text-sm font-medium text-zinc-200 hover:border-accent/50 hover:text-white transition"><svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.75.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a></div>
+        <p class="mt-8 text-sm text-zinc-500">
+          <a href="mailto:aryan99999999@gmail.com" class="hover:text-zinc-300 transition">aryan99999999@gmail.com</a>
+          · <a href="tel:+919028374152" class="hover:text-zinc-300 transition">+91 9028374152</a>
+          · Maharashtra, India
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-zinc-800/60 py-8"><div class="mx-auto max-w-5xl px-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500"><p>Designed &amp; developed by Aryan Patil · © 2026</p><div class="flex flex-wrap items-center gap-5"><a href="https://github.com/aryanpm28" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:text-zinc-300 transition"><svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.75.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a><a href="https://www.linkedin.com/in/aryanpatil2006/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:text-zinc-300 transition"><svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>LinkedIn</a><a href="mailto:aryan99999999@gmail.com" class="inline-flex items-center gap-1.5 hover:text-zinc-300 transition"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>Email</a><a href="#resume" class="inline-flex items-center gap-1.5 hover:text-zinc-300 transition">Resume</a></div></div></footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Mobile menu toggle
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    btn?.addEventListener('click', () => menu.classList.toggle('hidden'));
+
+    // Close mobile menu on link click
+    menu?.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => menu.classList.add('hidden'));
+    });
+
+    // Active nav highlight on scroll
+    const sections = ['projects', 'about', 'skills', 'experience', 'resume', 'contact'];
+    const navLinks = document.querySelectorAll('nav .nav-link');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navLinks.forEach(l => l.classList.remove('active', 'text-white'));
+            const id = entry.target.id;
+            const link = document.querySelector(`nav a[href="#${id}"]`);
+            if (link) {
+              link.classList.add('active', 'text-white');
+            }
+          }
+        });
+      },
+      { rootMargin: '-40% 0px -50% 0px' }
+    );
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    // ---- Projects: rendered from data, with filter ----
+    const P = [
+      { feat: 1, icon: '🔒', title: 'SecureStorage', tags: 'java', live: 'https://secure-storage-nine.vercel.app', gh: 'https://github.com/aryanpm28/secure-storage',
+        stack: ['Spring Boot 3', 'Spring Security', 'MySQL', 'React', 'JWT'],
+        sum: 'Private cloud storage for images, videos and documents. Every request passes a custom Spring Security filter, and every file is ownership-checked.',
+        groups: [['Architecture', 'React SPA → Spring Boot REST API → MySQL, with a custom OncePerRequestFilter in front of every protected route.'],
+          ['Authentication', 'JWT with BCrypt-hashed passwords, ownership-checked file access and expiring token-based share links.'],
+          ['Security features', 'IP/user blocking, access-attempt logs, magic-byte file verification and path-traversal protection.'],
+          ['Storage system', 'Images, video and documents with per-type size limits, folders and a 10GB per-user quota.']] },
+      { icon: '📩', title: 'ClickNotify', tags: 'java', live: 'https://clicknotify.vercel.app', gh: 'https://github.com/aryanpm28/clicknotify',
+        stack: ['Spring Boot', 'Brevo API', 'Telegram Bot API', 'React', 'MySQL'],
+        sum: 'Email alerts through Brevo and Telegram alerts through a BotFather-configured bot, failing independently. One-tap Telegram deep-link linking; API-key auth and per-IP rate limiting protect the third-party calls.' },
+      { icon: '🔍', title: 'AI Chatbot Search', tags: 'mern ai', live: 'https://ai-chatbot-search.vercel.app', gh: 'https://github.com/aryanpm28/ai-chatbot-search',
+        stack: ['React', 'Node.js', 'Express', 'MongoDB', 'Groq AI'],
+        sum: 'MERN chatbot that answers with live Wikipedia sources and Groq AI. JWT + bcrypt auth, full CRUD chat sessions and per-user isolation.' },
+      { icon: '🕵️', title: 'AI Detector', tags: 'mern ai', live: 'https://ai-detector-five-bay.vercel.app', gh: 'https://github.com/aryanpm28/ai-detector',
+        stack: ['React', 'Node.js', 'Express', 'MongoDB', 'Groq LLM'],
+        sum: 'LLM judgment blended with a stylometric heuristic for explainable AI-vs-human scores. PDF/DOCX parsed in the browser; falls back to heuristics if the AI provider is down.' }
+    ];
+    const G = {
+      'ClickNotify': [
+        ['Architecture', 'React frontend → Spring Boot REST API → MySQL, with email and Telegram built as two separate notification channels.'],
+        ['Notification channels', 'Email is sent through the Brevo API and Telegram alerts through the Telegram Bot API, with the bot created and configured in BotFather. Each channel fails independently of the other.'],
+        ['Telegram linking', 'One-tap deep-link linking connects a user to the bot, so nobody has to find or type a chat ID.'],
+        ['Security features', 'API-key authentication and per-IP rate limiting protect the third-party email and Telegram services.']],
+      'AI Chatbot Search': [
+        ['Architecture', 'React frontend → Node.js / Express REST API → MongoDB, with chat sessions stored per user.'],
+        ['Authentication', 'JWT with bcrypt-hashed passwords; every API call is scoped to the signed-in user, so people only ever see their own chats.'],
+        ['Wikipedia + Groq AI', 'Answers combine live Wikipedia sources with a Groq-hosted LLM, so each reply comes with its source material.'],
+        ['Chat sessions', 'Full create, read, update and delete for chat sessions through user-scoped APIs.']],
+      'AI Detector': [
+        ['Architecture', 'React frontend → Node.js / Express REST API → MongoDB, with every analysis saved to the signed-in user history.'],
+        ['Authentication', 'JWT-based accounts protect the analysis endpoints and each user saved history.'],
+        ['Detection engine', 'An LLM judgment (75%) is blended with a stylometric heuristic (25%) for stable, explainable AI-vs-human scores.'],
+        ['Privacy and resilience', 'PDF and DOCX files are parsed in the browser, so raw files never reach the server. If the AI provider is down, the heuristic score is used instead.']]
+    };
+    P.forEach(p => { if (!p.groups) p.groups = G[p.title]; });
+    const wire = '<div class="flex h-full gap-2"><div class="w-1/4 space-y-2"><b class="block h-3 rounded bg-accent/30"></b>' + '<b class="block h-2 rounded bg-zinc-700/60"></b>'.repeat(4) +
+      '</div><div class="grid flex-1 grid-cols-3 gap-2">' + '<b class="rounded bg-zinc-800/80"></b>'.repeat(6) + '</div></div>';
+    const frame = p => !p.shot ? '' : `<a href="${p.live}" target="_blank" rel="noopener noreferrer" class="shot block overflow-hidden rounded-lg border border-zinc-800 bg-surface-900" aria-label="Open ${p.title} live demo">
+      <div class="flex items-center gap-1.5 border-b border-zinc-800 bg-surface-800 px-3 py-2"><i class="h-2 w-2 rounded-full bg-red-400/70"></i><i class="h-2 w-2 rounded-full bg-amber-400/70"></i><i class="h-2 w-2 rounded-full bg-emerald-400/70"></i><span class="ml-2 truncate font-mono text-[10px] text-zinc-500">${p.live.replace('https://', '')}</span></div>
+      ${p.shot ? `<img src="${p.shot}" alt="${p.title} screenshot" class="w-full">` : `<div class="aspect-[16/10] p-3">${wire}</div>`}</a>`;
+    const btns = p => `<div class="flex flex-wrap gap-2"><a href="${p.live}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-lg bg-accent px-3 py-1.5 text-xs font-semibold text-surface-950 hover:bg-cyan-300 transition">Live Demo →</a><a href="${p.gh}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-lg border border-zinc-700 px-3 py-1.5 text-xs font-medium text-zinc-300 hover:border-accent/50 hover:text-white transition">GitHub →</a></div>`;
+    const tags = p => `<div class="flex flex-wrap gap-1.5">${p.stack.map(s => `<span class="rounded bg-zinc-800 px-2 py-0.5 text-xs text-zinc-400">${s}</span>`).join('')}</div>`;
+    P.forEach(p => {
+      const el = document.createElement('article');
+      el.dataset.tags = p.tags;
+      el.className = p.feat ? 'card feat rounded-2xl p-5 md:p-7 mb-5' : 'card rounded-xl p-5 md:p-7';
+      const fr = frame(p);
+      el.innerHTML = `<div class="grid gap-6 lg:grid-cols-5">${fr ? `<div class="lg:col-span-3">${fr}</div>` : ''}<div class="flex flex-col gap-4 ${fr ? 'lg:col-span-2' : 'lg:col-span-5'}">
+        ${p.feat ? '<p class="section-label">★ #1 Featured project</p>' : ''}<h3 class="${p.feat ? 'text-2xl' : 'text-xl'} font-bold text-white">${p.icon} ${p.title}</h3><p class="text-sm leading-relaxed text-zinc-400">${p.sum}</p>${btns(p)}${tags(p)}</div></div>
+        <div class="mt-6 grid gap-3 sm:grid-cols-2">${p.groups.map(g => `<div class="rounded-lg border border-zinc-800 bg-surface-900/60 p-4"><p class="text-xs font-mono uppercase text-accent">${g[0]}</p><p class="mt-1 text-sm text-zinc-400">${g[1]}</p></div>`).join('')}</div>`;
+      document.getElementById(p.feat ? 'featured' : 'more').appendChild(el);
+    });
+    const chipEls = document.querySelectorAll('.fchip');
+    function applyFilter(f) {
+      chipEls.forEach(c => c.classList.toggle('active', c.dataset.filter === f));
+      const shown = [];
+      document.querySelectorAll('#projects article').forEach(a => {
+        const ok = f === 'all' || a.dataset.tags.split(' ').includes(f);
+        a.style.display = ok ? '' : 'none'; if (ok) shown.push(a);
+      });
+      if (window.gsap && !reduce) gsap.fromTo(shown, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power3.out' });
+    }
+    chipEls.forEach(c => c.addEventListener('click', () => applyFilter(c.dataset.filter)));
+    chipEls[0].classList.add('active');
+    const __origApplyFilter = applyFilter;
+    applyFilter = function (f) {
+      __origApplyFilter(f);
+      if (!window.gsap || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const shown = [...document.querySelectorAll('#projects article')].filter(a => a.style.display !== 'none');
+      gsap.fromTo(shown, { opacity: 0.35, y: 8 }, { opacity: 1, y: 0, duration: 0.35, stagger: 0.04, ease: 'power2.out' });
+    };
+
+    
+// ---- Motion: GSAP + subtle 3D background (elegant) ----
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const headerEl = document.querySelector('header');
+    const onScrollHeader = () => {
+      if (headerEl) headerEl.classList.toggle('is-scrolled', scrollY > 24);
+    };
+    onScrollHeader();
+    addEventListener('scroll', onScrollHeader, { passive: true });
+
+    (function bg() {
+      const c = document.getElementById('bg');
+      if (!c || !window.THREE || reduce) return;
+      let r;
+      try { r = new THREE.WebGLRenderer({ canvas: c, alpha: true, antialias: true }); }
+      catch (e) { c.remove(); return; }
+      r.setPixelRatio(Math.min(devicePixelRatio, 1.4));
+      const s = new THREE.Scene(), cam = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+      cam.position.z = 14;
+      const n = innerWidth < 700 ? 220 : 420, pos = new Float32Array(n * 3);
+      for (let i = 0; i < n * 3; i++) pos[i] = (Math.random() - 0.5) * 40;
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      const pts = new THREE.Points(g, new THREE.PointsMaterial({ color: 0x22d3ee, size: 0.05, transparent: true, opacity: 0.4 }));
+      const ico = new THREE.Mesh(new THREE.IcosahedronGeometry(5, 1),
+        new THREE.MeshBasicMaterial({ color: 0xa78bfa, wireframe: true, transparent: true, opacity: 0.08 }));
+      ico.position.set(7, -1, -6);
+      s.add(pts, ico);
+      const size = () => { r.setSize(innerWidth, innerHeight, false); cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); };
+      size(); addEventListener('resize', size);
+      let mx = 0, my = 0, sy = 0;
+      addEventListener('pointermove', e => { mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; });
+      addEventListener('scroll', () => { sy = scrollY; }, { passive: true });
+      const clock = new THREE.Clock();
+      (function frame() {
+        const t = clock.getElapsedTime();
+        pts.rotation.y = t * 0.015 + sy * 0.00012; pts.rotation.x = t * 0.008;
+        ico.rotation.x = t * 0.05; ico.rotation.y = t * 0.06;
+        cam.position.x += (mx * 1.2 - cam.position.x) * 0.025;
+        cam.position.y += (-my * 0.9 - cam.position.y) * 0.025;
+        cam.lookAt(0, 0, 0); r.render(s, cam);
+        requestAnimationFrame(frame);
+      })();
+    })();
+
+    if (window.gsap && window.ScrollTrigger && !reduce) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.from('.word > span', { yPercent: 100, duration: 1.05, stagger: 0.06, ease: 'power3.out', delay: 0.15 });
+      gsap.from('#home .max-w-5xl > *:not(h1)', { y: 20, opacity: 0, duration: 0.85, stagger: 0.1, ease: 'power2.out', delay: 0.35 });
+      gsap.to('.blob', { y: i => (i ? -60 : 60), ease: 'none',
+        scrollTrigger: { trigger: '#home', start: 'top top', end: 'bottom top', scrub: 1.2 } });
+      gsap.to('#progress', { scaleX: 1, ease: 'none',
+        scrollTrigger: { trigger: document.documentElement, start: 'top top', end: 'bottom bottom', scrub: 0.3 } });
+      const reveal = '.section-label, section h2, #about .card, #skills .card, #journey .card, #experience .card, #why .card, #resume .card, #contact > div > *';
+      gsap.set(reveal, { opacity: 0, y: 22 });
+      ScrollTrigger.batch(reveal, { start: 'top 88%', once: true,
+        onEnter: els => gsap.to(els, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', stagger: 0.06, overwrite: 'auto' }) });
+      gsap.from('.timeline-line', { scaleY: 0, transformOrigin: 'top', ease: 'none',
+        scrollTrigger: { trigger: '#journey', start: 'top 75%', end: 'center 55%', scrub: true } });
+      document.querySelectorAll('#projects article').forEach(card => {
+        gsap.from(card, { y: 36, opacity: 0, duration: 0.75, ease: 'power2.out',
+          scrollTrigger: { trigger: card, start: 'top 90%', once: true } });
+        const shot = card.querySelector('.shot');
+        if (shot) gsap.from(shot, { opacity: 0, y: 12, duration: 0.8, ease: 'power2.out',
+          scrollTrigger: { trigger: card, start: 'top 85%', once: true } });
+        if (matchMedia('(hover: hover)').matches) {
+          card.addEventListener('pointermove', e => {
+            const b = card.getBoundingClientRect();
+            card.style.setProperty('--mx', ((e.clientX - b.left) / b.width) * 100 + '%');
+            card.style.setProperty('--my', ((e.clientY - b.top) / b.height) * 100 + '%');
+          });
+        }
+      });
+      if (matchMedia('(hover: hover)').matches) {
+        const cx = gsap.quickTo('#cursor', 'x', { duration: 0.7, ease: 'power3' });
+        const cy = gsap.quickTo('#cursor', 'y', { duration: 0.7, ease: 'power3' });
+        addEventListener('pointermove', e => { cx(e.clientX); cy(e.clientY); });
+        gsap.set('#cursor', { opacity: 1 });
+      }
+      addEventListener('load', () => ScrollTrigger.refresh());
+    }
+
+    function countUp(el, target) {
+      const duration = 1000, start = performance.now();
+      function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        el.textContent = Math.round((1 - Math.pow(1 - progress, 3)) * target);
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    const statObserver = new IntersectionObserver((es) => {
+      es.forEach(e => { if (!e.isIntersecting) return;
+        e.target.querySelectorAll('[data-count]').forEach(el => countUp(el, +el.dataset.count));
+        statObserver.unobserve(e.target); });
+    }, { threshold: 0.4 });
+    const statsCard = document.querySelector('[data-count]')?.closest('.card');
+    if (statsCard) statObserver.observe(statsCard);
+  </script>
+</body>
+</html>
